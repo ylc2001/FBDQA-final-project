@@ -1,7 +1,6 @@
 import os
 from .model import *
 import numpy as np
-import random
 
 class Predictor():
     def __init__(self):
@@ -13,15 +12,14 @@ class Predictor():
         self.model.eval()
 
     def predict(self,x):
-        # with torch.no_grad():
-        #     x = self.preprocess(x)
-        #     x = torch.tensor(x.values).to(torch.float32).unsqueeze(0).unsqueeze(0).to(self.device)
-        #     y = self.model(x) # shape:[1, output]
-        #     y = y.cpu().numpy()
-        #     y = self.generate_signal(y, single_label=True) # shape:[1, label_num]
-        #     y = list(y.reshape(-1)) # shape:[label_num]
-        #     return y
-        return [random.choice([0, 1, 2]) for _ in range(5)]
+        with torch.no_grad():
+            x = self.preprocess(x)
+            x = torch.tensor(x.values).to(torch.float32).unsqueeze(0).unsqueeze(0).to(self.device)
+            y = self.model(x) # shape:[1, output]
+            y = y.cpu().numpy()
+            y = self.generate_signal(y, single_label=True) # shape:[1, label_num]
+            y = list(y.reshape(-1)) # shape:[label_num]
+            return y
     
     ## 这里不重要，预处理方式因人而异
     def preprocess(self, df):
