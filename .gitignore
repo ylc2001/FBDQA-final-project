@@ -5,6 +5,9 @@ __pycache__/
 .DS_Store
 *.zip
 FBDQA2021A_MMP_Challenge_ver0.2
+np_data
+wandb
+/*.pth
 
 # C extensions
 *.so
