@@ -25,7 +25,7 @@ if __name__ == "__main__":
         columns = json.load(a)
     
     #加载数据
-    df = pd.read_csv('D:\my-dev-code\FBDQA-final-project\FBDQA2021A_MMP_Challenge_ver0.2\data\snapshot_sym9_date7_am.csv') # 可以自行添加csv文件做测试
+    df = pd.read_csv('D:\my-dev-code\FBDQA-final-project\FBDQA2021A_MMP_Challenge_ver0.2\data\snapshot_sym9_date36_am.csv') # 可以自行添加csv文件做测试
     syms = df['sym'].unique()
     dates = df['date'].unique()
     predict_result = []
@@ -46,32 +46,8 @@ if __name__ == "__main__":
             for index in range(0, len(np_data) - slide_window):
                 data = np_data.iloc[index : index + slide_window,:].copy()
                 target = data.iloc[-1]["label_5"]
-                if target == 0:
-                    target0_num += 1
-                elif target == 1:
-                    target1_num += 1
-                else:
-                    target2_num += 1
                 outputs = predictor.predict(data)   # [label_num]
-                
-                if outputs[0] == 0:
-                    target0_num_predict += 1
-                elif outputs[0] == 1:
-                    target1_num_predict += 1
-                else:
-                    target2_num_predict += 1
-                if outputs[0] == target:
-                    correct_test_preds += 1
-                total_test_preds += 1
-            print(f"sym: {sym}, date: {date}, acc: {correct_test_preds / total_test_preds}")
-            print(f"correct_test_preds: {correct_test_preds}, total_test_preds: {total_test_preds}")
-            # calculate target percentage
-            print(f"target0_num: {target0_num}, target1_num: {target1_num}, target2_num: {target2_num}")
-            print(f"target0_percentage: {target0_num / total_test_preds}, target1_percentage: {target1_num / total_test_preds}, target2_percentage: {target2_num / total_test_preds}")
-            print(f"target0_num_predict: {target0_num_predict}, target1_num_predict: {target1_num_predict}, target2_num_predict: {target2_num_predict}")
-            print(f"target0_predict_percentage: {target0_num_predict / total_test_preds}, target1_predict_percentage: {target1_num_predict / total_test_preds}, target2_predict_percentage: {target2_num_predict / total_test_preds}")
-            # target 是0或2里面判断正确的比例
-            print(f"target0_acc: {target0_num_predict / target0_num}, target2_acc: {target2_num_predict / target2_num}")
+                print(outputs)
             break
         break
                     
